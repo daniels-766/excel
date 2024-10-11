@@ -648,13 +648,34 @@ def register_user():
         return redirect(url_for('dashboard'))
 
     if request.method == 'POST':
+        # Ambil semua data dari form
         username = request.form.get('username')
         password = request.form.get('password')
         name = request.form.get('name')
         staff_id = request.form.get('staff_id')
         phone = request.form.get('phone')
-        lokasi = request.form.get('lokasi')
         email = request.form.get('email')
+
+        # Ambil lokasi sebagai list
+        lokasi = request.form.getlist('lokasi')  # Mengambil semua lokasi yang dipilih
+
+        # Debugging: Lihat semua data yang diterima
+        print("Data yang diterima:")
+        print("Username:", username)
+        print("Password:", password)
+        print("Name:", name)
+        print("Staff ID:", staff_id)
+        print("Phone:", phone)
+        print("Email:", email)
+        print("Lokasi:", lokasi)  # Cek nilai lokasi
+
+        # Cek nilai lokasi
+        if not lokasi:  # Jika tidak ada lokasi yang dipilih
+            flash('Please select at least one location.')
+            return render_template('admin_dashboard.html')
+
+        # Gabungkan lokasi menjadi string jika diperlukan
+        lokasi_str = ', '.join(lokasi)  # Ubah list lokasi menjadi string dengan pemisah koma
 
         # Check if username or email already exists
         if User.query.filter_by(username=username).first() or User.query.filter_by(email=email).first():
@@ -663,7 +684,16 @@ def register_user():
 
         # Create new user
         hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
-        new_user = User(username=username, password_hash=hashed_password, role='user', name=name, staff_id=staff_id, phone=phone, lokasi=lokasi, email=email)
+        new_user = User(
+            username=username,
+            password_hash=hashed_password,
+            role='user',
+            name=name,
+            staff_id=staff_id,
+            phone=phone,
+            lokasi=lokasi_str,  # Pastikan ini sesuai dengan struktur User Anda
+            email=email
+        )
         db.session.add(new_user)
         db.session.commit()
 
@@ -671,6 +701,7 @@ def register_user():
         return redirect(url_for('dashboard'))
 
     return render_template('admin_dashboard.html')
+
 
 @app.route('/view-excel-data')
 @login_required

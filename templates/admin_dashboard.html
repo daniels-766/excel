@@ -25,6 +25,52 @@
 		<link href="../static/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
 		<link href="../static/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
 		<!--end::Global Stylesheets Bundle-->
+		<style>
+			.city-label {
+				font-weight: bold;
+				cursor: pointer;
+				margin: 10px 0;
+				display: flex;
+				align-items: center;
+			}
+
+			.arrow {
+				margin-right: 10px;
+				transition: transform 0.3s ease;
+			}
+
+			.city-options {
+				margin-left: 20px;
+				display: none;
+				padding-left: 15px;
+				border-left: 3px solid #001aff; 
+			}
+
+			.city-options.show {
+				display: block;
+				max-height: 500px;
+				opacity: 1;
+			}
+
+			.city-group {
+				border-radius: 5px;
+				overflow: hidden;
+				margin-bottom: -15px;
+			}
+
+			.city-label.active .arrow {
+				transform: rotate(90deg); 
+			}
+
+			.city-options label {
+				display: block;
+				margin-bottom: 5px;
+				font-weight: normal;
+				color: #333;
+				cursor: pointer;
+			}
+
+		</style>
 	</head>
 	<!--end::Head-->
 	<!--begin::Body-->
@@ -359,7 +405,7 @@
                                                     <!--begin::Modal content-->
                                                     <div class="modal-content">
                                                         <!--begin::Form-->
-                                                        <form action="{{ url_for('register_user') }}" method="POST" class="form" action="#" id="kt_modal_add_customer_form" data-kt-redirect="../../demo1/dist/apps/customers/list.html">
+                                                        <form method="POST" action="{{ url_for('register_user') }}">
                                                             <!--begin::Modal header-->
                                                             <div class="modal-header" id="kt_modal_add_customer_header">
                                                                 <!--begin::Modal title-->
@@ -397,7 +443,7 @@
 																		<label class="required fs-6 fw-bold mb-2">Name</label>
 																		<!--end::Label-->
 																		<!--begin::Input-->
-																		<input type="text" class="form-control form-control-solid" placeholder="Input Name" id="name" name="name" readonly required />
+																		<input type="text" class="form-control form-control-solid" placeholder="Input Name" id="name" name="name" readonly />
 																		<!--end::Input-->
 																	</div>
                                                                     <!--end::Input group-->
@@ -440,73 +486,126 @@
                                                                     <!--end::Input group-->
                                                                     <!--begin::Input group-->
                                                                     <div class="d-flex flex-column fv-row mb-15">
-                                                                        <!--begin::Label-->
-                                                                        <label class="fs-6 fw-bold mb-2">
-                                                                            <span class="required">City</span>
-                                                                            <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="City of origination"></i>
-                                                                        </label>
-                                                                        <!--end::Label-->
-                                                                        <!--begin::Input-->
-                                                                        <select name="lokasi" aria-label="Select a City" data-control="select2" data-placeholder="Select a City..." data-dropdown-parent="#kt_modal_add_customer" class="form-select form-select-solid fw-bolder">
-                                                                            <option value="">Select a City...</option>
-                                                                            <option value="TANJUNG PRIOK">TANJUNG PRIOK</option>
-																			<option value="KOJAPENJARINGAN">KOJAPENJARINGAN</option>
-																			<option value="PADEMANGAN">PADEMANGAN</option>
-																			<option value="PAMULANG">PAMULANG</option>
-																			<option value="PONDOK AREN">PONDOK AREN</option>
-																			<option value="CIPUTAT">CIPUTAT</option>
-																			<option value="CIPAYUNG">CIPAYUNG</option>
-																			<option value="CIRACAS">CIRACAS</option>
-																			<option value="KAMPUNG MAKASAR">KAMPUNG MAKASAR</option>
-																			<option value="GROGOL PETAMBURAN">GROGOL PETAMBURAN</option>
-																			<option value="TAMBORA">TAMBORA</option>
-																			<option value="CENGKARENG">CENGKARENG</option>
-																			<option value="KEMBANGAN">KEMBANGAN</option>
-																			<option value="KALIDERES">KALIDERES</option>
-																			<option value="PASAR KEMIS">PASAR KEMIS</option>
-																			<option value="CURUG">CURUG</option>
-																			<option value="JATIWUNG">JATIWUNG</option>
-																			<option value="CEMPAKA PUTIH">CEMPAKA PUTIH</option>
-																			<option value="GAMBIR">GAMBIR</option>
-																			<option value="JOHAR">JOHAR</option>
-																			<option value="MENTENG SENEN">MENTENG SENEN</option>
-																			<option value="NEGLASARI">NEGLASARI</option>
-																			<option value="BATU CEPER">BATU CEPER</option>
-																			<option value="BENDA">BENDA</option>
-																			<option value="SUKASARI">SUKASARI</option>
-																			<option value="TAJURHALANG BOGOR SELATAN">TAJURHALANG BOGOR SELATAN</option>
-																			<option value="GUNUNG SINDUR">GUNUNG SINDUR</option>
-																			<option value="PARUNG">PARUNG</option>
-																			<option value="PANCORANMAS">PANCORANMAS</option>
-																			<option value="BOJONGSARI">BOJONGSARI</option>
-																			<option value="SAWANGAN">SAWANGAN</option>
-																			<option value="CINERE">CINERE</option>
-																			<option value="LIMO CILANDAK">LIMO CILANDAK</option>
-																			<option value="BEKASI SELATAN">BEKASI SELATAN</option>
-																			<option value="BEKASI TIMUR">BEKASI TIMUR</option>
-																			<option value="BEKASI UTARA">BEKASI UTARA</option>
-																			<option value="MEDAN SATRIA">MEDAN SATRIA</option>
-																			<option value="KARAWACI CIBODAS PERIUK">KARAWACI CIBODAS PERIUK</option>
-																			<option value="DENPASAR SELATAN">DENPASAR SELATAN</option>
-																			<option value="DENPASAR TIMUR">DENPASAR TIMUR</option>
-																			<option value="DENPASAR BARAT">DENPASAR BARAT</option>
-																			<option value="DENPASAR UTARA">DENPASAR UTARA</option>
-																			<option value="SAWAHAN">SAWAHAN</option>
-																			<option value="WIYUNG">WIYUNG</option>
-																			<option value="DUKUH PAKIS">DUKUH PAKIS</option>
-																			<option value="SUKOMANUNGGA">SUKOMANUNGGA</option>
-																			<option value="TANDES">TANDES</option>
-																			<option value="BENOWO">BENOWO</option>
-																			<option value="GAYUNGAN">GAYUNGAN</option>
-																			<option value="RUNGKUT">RUNGKUT</option>
-																			<option value="WONOKROMO">WONOKROMO</option>
-																			<option value="SAMBIKEREP">SAMBIKEREP</option>
-																			<option value="WONOCOLO">WONOCOLO</option>
-																			<option value="JAMBANGAN">JAMBANGAN</option>
-																			<option value="GAYUNGAN">GAYUNGAN</option>
-                                                                        </select>
-                                                                        <!--end::Input-->
-                                                                    </div>
+																		<label class="fs-6 fw-bold mb-2">
+																			<span class="required">City</span>
+																			<i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="City of origination"></i>
+																		</label>
+																		<div class="city-dropdown">
+																			<!-- JAKARTA UTARA -->
+																			<div class="city-group">
+																				<div class="city-label" onclick="toggleCity('jakarta-utara')">
+																					<span class="arrow">&#9654;</span> JAKARTA UTARA
+																				</div>
+																				<div class="city-options jakarta-utara">
+																					<label><input type="checkbox" name="lokasi" value="TANJUNG PRIOK"> TANJUNG PRIOK</label>
+																					<label><input type="checkbox" name="lokasi" value="KOJA"> KOJA</label>
+																					<label><input type="checkbox" name="lokasi" value="PENJARINGAN"> PENJARINGAN</label>
+																					<label><input type="checkbox" name="lokasi" value="PADEMANGAN"> PADEMANGAN</label>
+																				</div>
+																			</div>
+																			<div class="city-group">
+																				<div class="city-label" onclick="toggleCity('jakarta-timur')">
+																					<span class="arrow">&#9654;</span> JAKARTA TIMUR
+																				</div>
+																				<div class="city-options jakarta-timur">
+																					<label><input type="checkbox" name="lokasi" value="CIPAYUNG"> CIPAYUNG</label>
+																					<label><input type="checkbox" name="lokasi" value="CIRACAS"> CIRACAS</label>
+																					<label><input type="checkbox" name="lokasi" value="MAKASAR"> MAKASAR</label>
+																				</div>
+																			</div>
+																			<div class="city-group">
+																				<div class="city-label" onclick="toggleCity('jakarta-barat')">
+																					<span class="arrow">&#9654;</span> JAKARTA BARAT
+																				</div>
+																				<div class="city-options jakarta-barat">
+																					<label><input type="checkbox" name="lokasi" value="GROGOL PETAMBURAN"> GROGOL PETAMBURAN</label>
+																					<label><input type="checkbox" name="lokasi" value="TAMBORA"> TAMBORA</label>
+																					<label><input type="checkbox" name="lokasi" value="CENGKARENG"> CENGKARENG</label>
+																					<label><input type="checkbox" name="lokasi" value="KEMBANGAN"> KEMBANGAN</label>
+																					<label><input type="checkbox" name="lokasi" value="KALIDERES"> KALIDERES</label>
+																				</div>
+																			</div>
+																			<div class="city-group">
+																				<div class="city-label" onclick="toggleCity('jakarta-pusat')">
+																					<span class="arrow">&#9654;</span> JAKARTA PUSAT
+																				</div>
+																				<div class="city-options jakarta-pusat">
+																					<label><input type="checkbox" name="lokasi" value="CEMPAKA PUTIH"> CEMPAKA PUTIH</label>
+																					<label><input type="checkbox" name="lokasi" value="GAMBIR"> GAMBIR</label>
+																					<label><input type="checkbox" name="lokasi" value="JOHAR"> JOHAR</label>
+																					<label><input type="checkbox" name="lokasi" value="MENTENG"> MENTENG</label>
+																					<label><input type="checkbox" name="lokasi" value="SENEN"> SENEN</label>
+																				</div>
+																			</div>
+																			<div class="city-group">
+																				<div class="city-label" onclick="toggleCity('tangsel')">
+																					<span class="arrow">&#9654;</span> TANGERANG SELATAN
+																				</div>
+																				<div class="city-options tangsel">
+																					<label><input type="checkbox" name="lokasi" value="PAMULANG"> PAMULANG</label>
+																					<label><input type="checkbox" name="lokasi" value="PONDOK AREN"> PONDOK AREN</label>
+																					<label><input type="checkbox" name="lokasi" value="CIPUTAT"> CIPUTAT</label>
+																				</div>
+																			</div>
+																			<div class="city-group">
+																				<div class="city-label" onclick="toggleCity('tangerang')">
+																					<span class="arrow">&#9654;</span> TANGERANG
+																				</div>
+																				<div class="city-options tangerang">
+																					<label><input type="checkbox" name="lokasi" value="PASAR KEMIS"> PASAR KEMIS</label>
+																					<label><input type="checkbox" name="lokasi" value="CURUG"> CURUG</label>
+																					<label><input type="checkbox" name="lokasi" value="JATIWUNG"> JATIWUNG</label>
+																					<label><input type="checkbox" name="lokasi" value="KARAWACI"> KARAWACI</label>
+																					<label><input type="checkbox" name="lokasi" value="CIBODAS"> CIBODAS</label>
+																					<label><input type="checkbox" name="lokasi" value="PERIUK"> PERIUK</label>
+																				</div>
+																			</div>
+																			<div class="city-group">
+																				<div class="city-label" onclick="toggleCity('bogor')">
+																					<span class="arrow">&#9654;</span> BOGOR
+																				</div>
+																				<div class="city-options bogor">
+																					<label><input type="checkbox" name="lokasi" value="TAJURHALANG BOGOR SELATAN"> TAJURHALANG BOGOR SELATAN</label>
+																					<label><input type="checkbox" name="lokasi" value="GUNUNG SINDUR"> GUNUNG SINDUR</label>
+																					<label><input type="checkbox" name="lokasi" value="PARUNG"> PARUNG</label>
+																				</div>
+																			</div>
+																			<div class="city-group">
+																				<div class="city-label" onclick="toggleCity('depok')">
+																					<span class="arrow">&#9654;</span> DEPOK
+																				</div>
+																				<div class="city-options depok">
+																					<label><input type="checkbox" name="lokasi" value="PANCORANMAS"> PANCORANMAS</label>
+																					<label><input type="checkbox" name="lokasi" value="BOJONGSARI"> BOJONGSARI</label>
+																					<label><input type="checkbox" name="lokasi" value="SAWANGAN"> SAWANGAN</label>
+																					<label><input type="checkbox" name="lokasi" value="CINERE"> CINERE</label>
+																					<label><input type="checkbox" name="lokasi" value="LIMO CILANDAK"> LIMO CILANDAK</label>
+																				</div>
+																			</div>
+																			<div class="city-group">
+																				<div class="city-label" onclick="toggleCity('bekasi')">
+																					<span class="arrow">&#9654;</span> BEKASI
+																				</div>
+																				<div class="city-options bekasi">
+																					<label><input type="checkbox" name="lokasi" value="BEKASI SELATAN"> BEKASI SELATAN</label>
+																					<label><input type="checkbox" name="lokasi" value="BEKASI TIMUR"> BEKASI TIMUR</label>
+																					<label><input type="checkbox" name="lokasi" value="BEKASI UTARA"> BEKASI UTARA</label>
+																					<label><input type="checkbox" name="lokasi" value="MEDAN SATRIA"> MEDAN SATRIA</label>
+																				</div>
+																			</div>
+																			<div class="city-group">
+																				<div class="city-label" onclick="toggleCity('bali')">
+																					<span class="arrow">&#9654;</span> BALI
+																				</div>
+																				<div class="city-options bali">
+																					<label><input type="checkbox" name="lokasi" value="DENPASAR SELATAN"> DENPASAR SELATAN</label>
+																					<label><input type="checkbox" name="lokasi" value="DENPASAR BARAT"> DENPASAR BARAT</label>
+																					<label><input type="checkbox" name="lokasi" value="DENPASAR UTARA"> DENPASAR UTARA</label>
+																					<label><input type="checkbox" name="lokasi" value="DENPASAR TIMUR"> DENPASAR TIMUR</label>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
                                                                     <!--end::Input group-->
                                                                 </div>
                                                                 <!--end::Scroll-->
@@ -719,6 +818,16 @@
 					nameInput.value = usernameInput.value;
 				});
 			</script>
+			<script>
+				function toggleCity(cityClass) {
+					var cityOptions = document.querySelector('.' + cityClass);
+					var label = cityOptions.previousElementSibling;
+			
+					cityOptions.classList.toggle('show');
+					label.classList.toggle('active'); // Menambahkan kelas aktif untuk memutar panah
+				}
+			</script>
+			
 		<!--end::Javascript-->
 	</body>
 	<!--end::Body-->
